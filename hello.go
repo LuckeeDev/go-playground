@@ -21,10 +21,12 @@ func main() {
 		f, err := os.Create("data.txt")
 
 		if err != nil {
-			f.WriteString(payload)
+			fmt.Println("error")
 		}
 
-		fmt.Printf(payload)
+		f.WriteString(payload)
+
+		fmt.Println(payload)
 	})
 
 	router.Run(":8080")
