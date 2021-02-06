@@ -7,16 +7,18 @@ import (
 )
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
+	router := gin.Default()
+	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
 
-	r.POST("/event_handler", func(c *gin.Context) {
-		fmt.Println("Event received")
+	router.POST("/event_handler", func(c *gin.Context) {
+		payload := c.PostForm("payload")
+
+		fmt.Printf(payload)
 	})
 	
-	r.Run()
+	router.Run(":8080")
 }
