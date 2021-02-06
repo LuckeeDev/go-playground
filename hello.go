@@ -17,18 +17,22 @@ func main() {
 
 	router.POST("/event_handler", func(c *gin.Context) {
 		header := c.Request.Header["HTTP_X_GITHUB_EVENT"]
-		fmt.Println(header)
-		payload := c.PostForm("payload")
 
-		f, err := os.Create("data.json")
-
-		if err != nil {
-			fmt.Println("error")
+		if header != nil {
+			payload := c.PostForm("payload")
+	
+			f, err := os.Create("data.json")
+	
+			if err != nil {
+				fmt.Println("error")
+			} else {
+				f.WriteString(payload)
+			}
+	
+			fmt.Println("saved")
 		} else {
-			f.WriteString(payload)
+			fmt.Println("illegal action")
 		}
-
-		fmt.Println("saved")
 	})
 
 	router.Run(":8080")
