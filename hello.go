@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -17,8 +18,14 @@ func main() {
 	router.POST("/event_handler", func(c *gin.Context) {
 		payload := c.PostForm("payload")
 
+		f, err := os.Create("data.txt")
+
+		if err != nil {
+			f.WriteString(payload)
+		}
+
 		fmt.Printf(payload)
 	})
-	
+
 	router.Run(":8080")
 }
