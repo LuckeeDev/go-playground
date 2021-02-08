@@ -1,5 +1,6 @@
 package main
 
+// Payload defines the structure of the payload received from the GitHub API
 type Payload struct {
 	Ref          string      `json:"ref"`          
 	RefType      string      `json:"ref_type"`     
@@ -10,6 +11,7 @@ type Payload struct {
 	Sender       Sender      `json:"sender"`       
 }
 
+// Repository defines the structur of the Payload.Repository field
 type Repository struct {
 	ID               int64       `json:"id"`               
 	NodeID           string      `json:"node_id"`          
@@ -86,6 +88,7 @@ type Repository struct {
 	DefaultBranch    string      `json:"default_branch"`   
 }
 
+// Sender defines the structure of the Payload.Sender field
 type Sender struct {
 	Login             string `json:"login"`              
 	ID                int64  `json:"id"`                 
@@ -107,10 +110,13 @@ type Sender struct {
 	SiteAdmin         bool   `json:"site_admin"`         
 }
 
+// Headers defines the GithubEvent header
 type Headers struct {
 	GithubEvent string `header:"x-github-event"`
+	GithubSignature string `header:"x-hub-signature-256"`
 }
 
+// Form defines the structure of the API call
 type Form struct {
 	Payload Payload `form:"payload"`
 }

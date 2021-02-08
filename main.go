@@ -2,12 +2,23 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	router := gin.Default()
+	err := godotenv.Load()
+
+	SecretToken := os.Getenv("SECRET_TOKEN")
+
+	fmt.Println(SecretToken)
+
+	if err != nil {
+		fmt.Println("Error loading .env file")
+	}
 
 	router.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -28,7 +39,7 @@ func main() {
 		}
 	
 		fmt.Printf("%#v\n", headers)
-		c.JSON(200, gin.H{ "payload": form.Payload })
+		c.JSON(200, gin.H{ "payload": form.Payload, "header": headers.GithubSignature })
 	})
 
 	router.Run(":8080")
